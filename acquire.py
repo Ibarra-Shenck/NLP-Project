@@ -20,11 +20,13 @@ from env import github_token, github_username
 # TODO: Add your github username to your env.py file under the variable `github_username`
 # TODO: Add more repositories to the `REPOS` list below.
 
-REPOS = [
-    "gocodeup/codeup-setup-script",
-    "gocodeup/movies-application",
-    "torvalds/linux",
-]
+#REPOS = [
+#    "gocodeup/codeup-setup-script",
+#    "gocodeup/movies-application",
+#    "torvalds/linux",
+#]
+
+REPOS = ["dunglas/frankenphp"]
 
 headers = {"Authorization": f"token {github_token}", "User-Agent": github_username}
 
