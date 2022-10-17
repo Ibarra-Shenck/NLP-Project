@@ -26,7 +26,7 @@ from env import github_token, github_username
 #    "torvalds/linux",
 #]
 
-REPOS = ["dunglas/frankenphp"]
+#REPOS = ["dunglas/frankenphp"]
 
 headers = {"Authorization": f"token {github_token}", "User-Agent": github_username}
 
@@ -102,7 +102,7 @@ def process_repo(repo: str) -> Dict[str, str]:
     }
 
 
-def scrape_github_data() -> List[Dict[str, str]]:
+def scrape_github_data(REPOS) -> List[Dict[str, str]]:
     """
     Loop through all of the repos and process them. Returns the processed data.
     """
