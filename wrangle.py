@@ -295,7 +295,7 @@ def basic_clean(article0):
     ## decodes to change to "normal" characters after encoding to ascii from a unicode normalize
     article = unicodedata.normalize("NFKD",article).encode("ascii","ignore").decode("utf-8")
     # removes anything not lowercase, number, single quote, or a space
-    article = re.sub(r'[^a-z0-9\'\s]','',article)
+    article = re.sub(r'[^a-z0-9\s]','',article)
     return article
     
 
@@ -366,3 +366,36 @@ def prep_work(df):
 
 
     return lang, df, most_common_list, count_feature_list, low_lang_count
+
+
+def lang_bigrams(df,language="Java"):
+
+    import nltk
+    import matplotlib.pyplot as plt
+    lang_dict={"Language":[],"Words":[]}
+    for lang in df["clean_lang"].unique():
+        lang_dict["Language"].append(lang)
+        lang_dict["Words"].append((" ".join(df[df["clean_lang"]==lang]["lemmatized"])).replace("'","").split())
+    lang = pd.DataFrame(lang_dict)
+    most_common_list=[]
+    for i,each in enumerate(lang["Language"].unique()):
+        looped_series = pd.Series(lang["Words"].loc[i]).value_counts()
+        most_common = looped_series[looped_series > looped_series.quantile(.95)]
+        most_common_list.append(most_common[:5].index.tolist())
+    lang["most_common"] = pd.Series(most_common_list)
+    lang["count_set_words"] = lang["Words"].apply(set).apply(len)
+    java = ' '.join(df[df.clean_lang == language].lemmatized).split()
+    top_20_ham_bigrams = (pd.Series(nltk.ngrams(java, 2))
+                      .value_counts()
+                      .head(20))
+    top_20_ham_bigrams.sort_values(ascending=False).plot.barh(color='red', width=.9, figsize=(10, 6))
+
+    plt.title(f'20 Most frequently occuring {language} bigrams')
+    plt.ylabel('Bigram')
+    plt.xlabel('# Occurances')
+
+    # make the labels pretty
+    ticks, _ = plt.yticks()
+    labels = top_20_ham_bigrams.reset_index()['index'].apply(lambda t: t[0] + ' ' + t[1])
+    _ = plt.yticks(ticks, labels)
+    
