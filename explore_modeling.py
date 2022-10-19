@@ -189,9 +189,9 @@ def scale_split_data (train, validate, test, cols_to_scale=[]):
 
     return train_scaled, validate_scaled, test_scaled
 
-def prep_for_modeling(df,lang):
+def prep_for_modeling(df,lang,update):
 
-    validate_test_df = get_val_test(df,lang,False)
+    validate_test_df = get_val_test(df,lang,update)
     #print("got data, cleaned and processed")
     validate, test = split_data(validate_test_df,target="clean_lang")
     #print("split validate and test")
