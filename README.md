@@ -77,8 +77,10 @@ Language              | 487 non-null  String   |   Classifier for Language
 > - Conclusion: There is enough evidence to reject our null hypothesis for SOME cases
 
 ##  `Hypothesis 2 -` Does each language have unique bigrams?
+> - Conclusion: Yes each language has unique bigrams. However it's utility is quesitonable
 
 ##  `Hypothesis 3 -` Is the distribution of Readmes similar for each Language?
+> - Conclusion: Yes, the most questionable is the catch-all "other" which the lower count languages were aggregated into
 
 ##  `Hypothesis 4 -` Is the distribution of Count of Common words unique to a language a cood indicator of that language (Porportionality)**
 
