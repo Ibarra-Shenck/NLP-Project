@@ -174,3 +174,5 @@ Language              | 487 non-null  String   |   Classifier for Language
 * Fully examine this `README.md`
 * Download `github_forked.csv`, `github_val_test.py`, `wrangle.py, explore_modeling.py`, and `mvp.ipynb` to working directory
 * Run `mvp.ipynb`
+
+# Canva slide show:https://www.canva.com/design/DAFPfr48sw8/WsOPyP_dvzfwINgbxTIPzw/edit?utm_content=DAFPfr48sw8&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton
