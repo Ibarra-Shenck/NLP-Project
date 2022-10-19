@@ -135,7 +135,6 @@ def to_update_or_not_to_udpate(update_flag=True,list_repo=[]):
     if updating it will pull from most forked repos, at given (default 100 count), then make a csv
     otherwise pulls from csv
     '''
-    import acquire
     import time
     from os.path import exists
     from datetime import datetime
@@ -190,7 +189,6 @@ def get_validate_test(update_flag=True,list_repo=[]):
     if updating it will pull from most forked repos, at given (default 100 count), then make a csv
     otherwise pulls from csv
     '''
-    import acquire
     import time
     from os.path import exists
     from datetime import datetime
