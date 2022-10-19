@@ -18,6 +18,9 @@ if headers["Authorization"] == "token " or headers["User-Agent"] == "":
 
 
 def github_api_request(url: str) -> Union[List, Dict]:
+    ''' 
+    takes in the url and sends a request to get teh info, returns request response
+    '''
     print(url)
     response = requests.get(url, headers=headers)
     response_data = response.json()
@@ -30,6 +33,9 @@ def github_api_request(url: str) -> Union[List, Dict]:
 
 
 def get_repo_language(repo: str) -> str:
+    ''' 
+    takes in repo name and finds the langauge from the conentes
+    '''
     url = f"https://api.github.com/repos/{repo}"
     repo_info = github_api_request(url)
     if type(repo_info) is dict:
@@ -45,6 +51,10 @@ def get_repo_language(repo: str) -> str:
 
 
 def get_repo_contents(repo: str) -> List[Dict[str, str]]:
+    ''' 
+    the code i am most thankful for
+    it takes in the repo name and uses the api  to return the contents of said repo
+    '''
     url = f"https://api.github.com/repos/{repo}/contents/"
     contents = github_api_request(url)
     if type(contents) is list:
@@ -98,6 +108,11 @@ if __name__ == "__main__":
     json.dump(data, open("data.json", "w"), indent=1)
 
 def get_repo_names():
+    ''' 
+    no input (for intial phase)
+    uses pretdertmined list of languages and grabs first 15 pages in the most forked repos
+    uses timer to cool down aggro if github don't like
+    '''
     import random
     names = []
     langs = ['javascript', 'python', 'java', 'HTML', 'C++', 'Ruby']
@@ -153,6 +168,12 @@ def to_update_or_not_to_udpate(update_flag=True,list_repo=[]):
     return df
 
 def get_repo_names_val_test():
+    ''' 
+    no input (for modeling phase)
+    using a predetermined list of languages to search it goes to github and finds the first page of each
+    returns the list of repos on that page for searching with api
+    '''
+
     import random
     names = []
     langs = ['javascript', 'python', 'java', 'HTML', 'C++', 'Ruby']
@@ -205,16 +226,6 @@ def get_validate_test(update_flag=True,list_repo=[]):
             print("can not find file, please update instead")
         
     return df
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -300,6 +311,16 @@ def basic_clean(article0):
     
 
 def prep_work(df):   
+    ''' 
+    sends in a dataframe
+    goes thorugh and cleans lang and readme for na
+    cleans the readmes with encoded/decoding, regex, tokenizing, and removing stopwords
+    stems and lems
+    creates a list of low counts for each languages and if falls below threshold it moves it into "other"
+    creats a set from lem and counts
+    creates features that count how often words fall within a list of most common uniuqe to each language
+    returns work created (cleaned dataframe, new dataframe of languages, and lists)
+    '''
     df = df[df.language.isna()==False]
     df = df[df.readme_contents.isna()==False]
     print("dropped na")
@@ -323,26 +344,25 @@ def prep_work(df):
     # get count of unique words in each readme (set unique not unique to itself)
     df["count_set_lem"] = df["lemmatized"].str.strip().apply(set).apply(len)
 
-
+    #creates features in dataframe and adds name to list
     count_feature_list=[]
     for each in df.clean_lang.unique():
         df[f"count_most_common_{each}"] = ""
         count_feature_list.append(f"count_most_common_{each}")
 
-
+    #goes thorugh languages and creates dataframe of words unique to each
     lang_dict={"Language":[],"Words":[]}
     for lang in df["clean_lang"].unique():
         lang_dict["Language"].append(lang)
         lang_dict["Words"].append((" ".join(df[df["clean_lang"]==lang]["lemmatized"])).replace("'","").split())
     lang = pd.DataFrame(lang_dict)
 
+    #goes thorugh each unique list of words for each language and creates a list of those most common to it
     most_common_list=[]
     for i,each in enumerate(lang["Language"].unique()):
         looped_series = pd.Series(lang["Words"].loc[i]).value_counts()
         most_common = looped_series[looped_series > looped_series.quantile(.995)]
         most_common_list.append(most_common.index.tolist())
-
-    #unique_words = set.intersection(*map(set,most_common_list))
 
     lang["most_common"] = pd.Series(most_common_list)
 
@@ -369,7 +389,13 @@ def prep_work(df):
 
 
 def lang_bigrams(df,language="Java"):
-
+    ''' 
+    takes in dataframe and language to run
+    creates an aggregated dataframe with most common words
+    loops thorugh each for the language set and creates bigrams
+    uses top 20 to produce value counts
+    plots the result of the bigrams for that language
+    '''
     import nltk
     import matplotlib.pyplot as plt
     lang_dict={"Language":[],"Words":[]}

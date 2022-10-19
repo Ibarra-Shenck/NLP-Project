@@ -109,6 +109,13 @@ def explore_ttest_lang_setcount(df,population_name="clean_lang",numerical_featur
 
 
 def get_val_test(df,lang,update=False):
+    ''' 
+    send in df, lang and update (please dont likely to fail)
+    cleans the acquried dataframe FROM CSV BECAUSE YOU DIDN'T UPDATE
+    stems, lems
+    creates the features similar to our main dataframe (df/train)
+    returns the dataframe after being processed
+    '''
     if update:
         val_test_repos = get_repo_names_val_test()
         validate_test_df = get_validate_test(True,val_test_repos)
@@ -189,9 +196,18 @@ def scale_split_data (train, validate, test, cols_to_scale=[]):
 
     return train_scaled, validate_scaled, test_scaled
 
-def prep_for_modeling(df,lang,update):
+def prep_for_modeling(df,lang,update=False):
+    ''' 
+    send in dataframe, langauage df, and if you wnt to update (the answer is no)
+    if updating it gets fresh data frome most recent uploaded repos, otherwise it uses csv
+    splits the pulled data or csv into validate and test
+    scales df (and renames), validate and test
+    applieds the tfidf vectorizer (which is scaled by default) 
+    makes the X and y datasets/series. concats with teh vectorizer
+    returns results
+    '''
 
-    validate_test_df = get_val_test(df,lang,update)
+    validate_test_df = get_val_test(df,lang,update=False)
     #print("got data, cleaned and processed")
     validate, test = split_data(validate_test_df,target="clean_lang")
     #print("split validate and test")
@@ -231,6 +247,12 @@ def prep_for_modeling(df,lang,update):
     return X_train,X_validate,X_test,y_train,y_validate,y_test,train_scaled,validate_scaled,test_scaled
 
 def init_modeling(X_train,X_validate,y_train,y_validate):
+    ''' 
+    takes in x sets and y set (no test set though)
+    pushes thorugh 4 models (decison tree, logreg, rf, and knn)
+    returns print of classification reports and number of leaf in decision tree (best model for this use case)
+    '''
+
     from sklearn.model_selection import train_test_split
     from sklearn.metrics import classification_report
     from sklearn.metrics import confusion_matrix, accuracy_score
