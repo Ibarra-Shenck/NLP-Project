@@ -395,7 +395,7 @@ def prepare_df(df):
     # make a clean column (can drop other column later)
     df["count_set_lem"] = df["lemmatized"].str.strip().apply(set).apply(len)
     #create a list of low counts
-    low_lang_count = df.language.value_counts(normalize=True)[df.language.value_counts(normalize=True).lt(.07)].index.tolist()
+    low_lang_count = df.language.value_counts(normalize=True)[df.language.value_counts(normalize=True).lt(.068)].index.tolist()
     df['clean_lang'] = np.where(df['language'].isin(low_lang_count),'Other',df['language'])
     #see the results
     df["clean_lang"].value_counts()
@@ -1002,7 +1002,7 @@ def best_model(X_test,y_test):
 
 def baseline1(train):
     # determine the percentage of customers that churn/do not churn
-    baseline = train.y.value_counts().nlargest(1) / train.shape[0]
+    baseline = train.clean_lang.value_counts().nlargest(1) / train.shape[0]
     print(f'My baseline accuracy is {round(baseline.values[0] * 100,2)}%.')
     
     
