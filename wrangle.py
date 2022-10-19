@@ -301,6 +301,7 @@ def basic_clean(article0):
 
 def prep_work(df):   
     df = df[df.language.isna()==False]
+    df = df[df.readme_contents.isna()==False]
     print("dropped na")
     df["clean"] = [remove_stopwords(tokenize(basic_clean(each))) for each in df.readme_contents]
     print("cleaned")
@@ -309,6 +310,7 @@ def prep_work(df):
     df["lemmatized"] = df.clean.apply(lemmatize)
     print("lemmed")
 
+    df = df[df.lemmatized!=""]
 
     #create a list of low counts
     low_lang_count = df.language.value_counts(normalize=True)[df.language.value_counts(normalize=True).lt(.08)].index.tolist()
