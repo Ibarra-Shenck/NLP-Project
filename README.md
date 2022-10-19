@@ -178,4 +178,4 @@ Language              | 487 non-null  String   |   Classifier for Language
 * Run `mvp.ipynb`
 
 ## Canva slide show:
-https://www.canva.com/design/DAFPfr48sw8/_mjtmDjgtch4faGw1r4fEg/view?utm_content=DAFPfr48sw8&utm_campaign=designshare&utm_medium=link&utm_source=publishpresent
+https://www.canva.com/design/DAFPfr48sw8/WsOPyP_dvzfwINgbxTIPzw/edit
