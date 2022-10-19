@@ -172,7 +172,7 @@ Language              | 487 non-null  String   |   Classifier for Language
 > Requires personal `env.py` file containing github api and user-name (obtained in github)
 > Steps:
 * Fully examine this `README.md`
-* Download `github_forked.csv`, `github_val_test.py`, `wrangle.py, explore_modeling.py`, and `mvp.ipynb` to working directory
+* Download `github_forked.csv`,`github_val_test.csv`, `github_val_test.py`, `wrangle.py, explore_modeling.py`, and `mvp.ipynb` to working directory
 * Run `mvp.ipynb`
 
 ## Canva slide show:
