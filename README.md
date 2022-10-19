@@ -69,18 +69,18 @@ Language              | 487 non-null  String   |   Classifier for Language
 
 # Initial Questions and Hypotheses
 
-##  **Hypothesis 1 - Are the mean count_values of Unique Words in Each Language equal to the Population in relation to Non-Repeating Words for the ReadMes**
+##  `Hypothesis 1 -` Are the mean count_values of Unique Words in Each Language equal to the Population in relation to Non-Repeating Words for the ReadMes**
 
 > $H_0$: The mean values of `Non-Repeating Words(Readme)_langauge` will not be signifcantly different from `Non-Repeating Words(Readme)_population`.    
 >
 > $H_a$: Rejection of Null ~~The mean values of `Non-Repeating Words(Readme)_langauge` will not be signifcantly different from `Non-Repeating Words(Readme)_population`.~~  
 > - Conclusion: There is enough evidence to reject our null hypothesis for SOME cases
 
-##  **Hypothesis 2 - **
+##  `Hypothesis 2 -` Does each language have unique bigrams?
 
-##  **Hypothesis 3 - **
+##  `Hypothesis 3 -` Is the distribution of Readmes similar for each Language?
 
-##  **Hypothesis 4 - Is the distribution of Count of Common words unique to a language a cood indicator of that language (Porportionality)**
+##  `Hypothesis 4 -` Is the distribution of Count of Common words unique to a language a cood indicator of that language (Porportionality)**
 
 > $H_0$: The distribution of `Non-Repeating Words(Readme)_langauge` will be consistent between languages.    
 > $H_a$: Rejection of Null ~~The distribution of `Non-Repeating Words(Readme)_langauge` will be consistent between languages..~~  
