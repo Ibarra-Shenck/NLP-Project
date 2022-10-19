@@ -319,3 +319,27 @@ def init_modeling(X_train,X_validate,y_train,y_validate):
     print(classification_report(y_train, y_pred_train_neigh),"\t KMeans train classification")
     print(classification_report(y_validate, y_pred_val_neigh),"\t KMeans validate classification")
     return optimized_leafs
+
+def rfe(predictors_x,target_y,n_features):
+    ''' 
+    takes in the predictors (X) (predictors_x), the target (y) (target_y), and the number of features to select (k) 
+    returns the names of the top k selected features based on the Recursive Feature Elimination class. and a ranked df
+    '''
+
+    from sklearn.linear_model import LinearRegression
+    from sklearn.feature_selection import RFE
+
+    model = LinearRegression()
+    rfe = RFE(model,n_features_to_select=n_features)
+    rfe.fit(predictors_x,target_y)
+
+    print(pd.DataFrame({"rfe_ranking":rfe.ranking_},index=predictors_x.columns).sort_values("rfe_ranking")[:n_features])
+    X_train_transformed = pd.DataFrame(rfe.transform(predictors_x),columns=predictors_x.columns[rfe.get_support()],index=predictors_x.index)
+    X_train_transformed.head(3)
+
+    var_ranks = rfe.ranking_
+    var_names = predictors_x.columns.tolist()
+
+    rfe_ranked = pd.DataFrame({'Var': var_names, 'Rank': var_ranks}).sort_values("Rank")
+    
+    return rfe_ranked
